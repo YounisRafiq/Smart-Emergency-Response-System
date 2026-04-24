@@ -1,0 +1,28 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Emergency",
+    "Ambulance",
+    "Accident"
+  ],
+  "author": "Younis_Ali",
+  "license": "ISC",
+  "description": "Smart Emergency Response System is a full-stack app that detects accidents or lets users trigger alerts manually. It sends real-time location, emergency calls, and Urdu voice messages to nearby services and contacts, helping ensure fast response and potentially saving lives in critical situations",
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.5.0"
+  }
+}
