@@ -4,9 +4,9 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const registerUser = async (req, res) => {
-  const { fullName, email, password, gender } = req.body;
+  const { fullName, email, password, gender , phone } = req.body;
 
-  if (fullName === "" || email === "" || password === "" || gender === "") {
+  if (!fullName || fullName === "" || !email || email === "" || !password || password === "" || !gender || gender === "" || !phone || phone === "") {
     return res.status(401).json({
       success: false,
       message: "All Fields are required",
@@ -39,6 +39,7 @@ const registerUser = async (req, res) => {
     password: hashedPassword,
     gender,
     profileImage: image?.secure_url || null,
+    phone
   });
 
   console.log(user);
@@ -67,6 +68,7 @@ const registerUser = async (req, res) => {
       fullName,
       email,
       gender,
+      phone
     },
   });
 };

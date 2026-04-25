@@ -1,9 +1,16 @@
 const EmergencyContact = require("../models/emergenyContact.model");
+const userModel = require("../models/user.model");
 
 const addEmergencyContact = async (req, res) => {
   try {
     const userId = req.user.id;
-    const { name, phone, realtion } = req.body;
+  
+    console.log("User" , userId)
+
+    const { name, phone, relation } = req.body;
+
+    console.log(name , phone , relation)
+
     if (!userId) {
       return res.status(404).json({
         success: false,
@@ -14,8 +21,6 @@ const addEmergencyContact = async (req, res) => {
     if (
       !name ||
       name.trim() === "" ||
-      !email ||
-      email.trim() === "" ||
       !phone ||
       phone.trim() === "" ||
       !relation ||
@@ -25,25 +30,24 @@ const addEmergencyContact = async (req, res) => {
         success: false,
         message: "All Fields are required",
       });
-    };
+    }
 
-   const contact = await EmergencyContact.create({
-    name,
-    email,
-    relation,
-    user : userId
-   });
+    const contact = await EmergencyContact.create({
+      name,
+      relation,
+      phone,
+      user: userId,
+    });
 
-   res.status(200).json({
-    success : true,
-    contact,
-    message : "Emergency Contact Addedd SuccessFully"
-   })
-
+    res.status(200).json({
+      success: true,
+      contact,
+      message: "Emergency Contact Addedd SuccessFully",
+    });
   } catch (error) {
     res.status(500).json({
-        success : false,
-        message : "Server Error"
+      success: false,
+      message: "Server Error",
     });
   }
 };
