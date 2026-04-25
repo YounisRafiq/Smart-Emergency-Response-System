@@ -1,10 +1,9 @@
 const express = require("express");
 const router = express.Router();
+const authMiddleware = require("../middleware/auth.middleware");
 const userController = require("../controllers/user.controller");
-const upload = require("../middleware/multer.middleware");
 
-router.post("/user/register", upload.single("profileImage") ,  userController.registerUser);
-router.post("/user/login" , userController.loginUser);
-router.get("/user/logout" , userController.logoutUser);
+router.post("/add-emergency-contact" , authMiddleware.authMiddleware , userController.addEmergencyContact);
+router.get("/profile" , authMiddleware.authMiddleware , userController.getProfile)
 
 module.exports = router;
