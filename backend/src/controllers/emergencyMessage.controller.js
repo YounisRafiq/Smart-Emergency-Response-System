@@ -1,4 +1,5 @@
 const EmergencyContact = require("../models/emergenyContact.model");
+const sendSms = require("../services/sms.service");
 
 const sendEmergencyMessage = async (req, res) => {
   try {
@@ -23,26 +24,29 @@ const sendEmergencyMessage = async (req, res) => {
     const { latitude, longitude } = req.body;
     const time = new Date();
 
-    const messages = contacts.map((contact) => {
-      return {
-        name: contact.name,
-        phone: contact.phone,
-        message: `🚨 Emergency Alert!
+    const messageText = `🚨 Emergency Alert!
 User needs help.
 Location: ${latitude || "N/A"}, ${longitude || "N/A"}
-Time: ${time}`,
-      };
-    });
+Time: ${time}`;
 
-    messages.forEach((msg) => {
-      console.log("Sending to:", msg.phone);
-      console.log(msg.message);
-    });
+    const smsResults = [];
+
+    for (let contact of contacts) {
+      console.log("Sending SMS to:", contact.phone);
+
+      const result = await sendSms(contact.phone, messageText);
+
+      smsResults.push({
+        name: contact.name,
+        phone: contact.phone,
+        result,
+      });
+    }
 
     return res.status(200).json({
       success: true,
-      message: "Emergency messages triggered successfully",
-      data: messages,
+      message: "Emergency SMS sent successfully",
+      data: smsResults,
     });
 
   } catch (error) {
@@ -55,5 +59,5 @@ Time: ${time}`,
 };
 
 module.exports = {
-    sendEmergencyMessage
-}
+  sendEmergencyMessage
+};
